@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 背景颜色或透明度 -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent" /> <!-- 搜索框背景颜色 -->
+        </shape>
+    </item>
+
+    <!-- 边框，带有虚线或花纹效果 -->
+    <item>
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="2dp"
+                android:color="#03A9F4" /> <!-- 边框颜色 -->
+
+
+
+            <!-- 圆角 -->
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+</layer-list>

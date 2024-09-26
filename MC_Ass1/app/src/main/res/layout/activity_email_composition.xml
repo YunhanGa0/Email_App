@@ -1,0 +1,102 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- From -->
+    <EditText
+        android:id="@+id/et_from"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="From" />
+
+    <!-- To -->
+    <EditText
+        android:id="@+id/et_to"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="To" />
+
+    <!-- CC -->
+    <EditText
+        android:id="@+id/et_cc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="CC" />
+
+    <!-- BCC -->
+    <EditText
+        android:id="@+id/et_bcc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="BCC" />
+
+    <!-- Subject -->
+    <EditText
+        android:id="@+id/et_subject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Subject" />
+
+    <!-- Email Body -->
+    <EditText
+        android:id="@+id/et_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email Body"
+        android:gravity="top"
+        android:minHeight="150dp"
+        android:inputType="textMultiLine"
+        android:scrollbars="vertical" />
+
+    <!-- Buttons: Clear, Preview -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Clear" />
+
+        <Button
+            android:id="@+id/btn_preview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Preview" />
+    </LinearLayout>
+
+    <!-- Developer Info -->
+    <TextView
+        android:id="@+id/tv_developer_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Developed by Yunhan Gao            ↓This is me"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:textStyle="italic"/>
+
+    <!-- 新增的图片和文字 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="8dp">
+
+        <ImageView
+            android:id="@+id/iv_developer_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/your_logo_image"
+            android:contentDescription="Developer Photo"/>
+
+    </LinearLayout>
+
+</LinearLayout>
