@@ -2,8 +2,11 @@ package com.example.mc_ass1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +14,9 @@ public class EmailCompositionActivity extends AppCompatActivity {
 
     private EditText etFrom, etTo, etCc, etBcc, etSubject, etBody;
     private Button btnClear, btnPreview;
+    private ImageButton btnExpand;
+    private LinearLayout layoutCcBcc;
+    private boolean isCcBccVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +32,8 @@ public class EmailCompositionActivity extends AppCompatActivity {
         etBody = findViewById(R.id.et_body);
         btnClear = findViewById(R.id.btn_clear);
         btnPreview = findViewById(R.id.btn_preview);
+        btnExpand = findViewById(R.id.btn_expand);
+        layoutCcBcc = findViewById(R.id.layout_cc_bcc);
 
         // Clear
         btnClear.setOnClickListener(v -> {
@@ -46,6 +54,18 @@ public class EmailCompositionActivity extends AppCompatActivity {
             intent.putExtra("subject", etSubject.getText().toString());
             intent.putExtra("body", etBody.getText().toString());
             startActivity(intent);
+        });
+
+        // Expand/Collapse CC and BCC fields
+        btnExpand.setOnClickListener(v -> {
+            if (isCcBccVisible) {
+                layoutCcBcc.setVisibility(View.GONE);
+                btnExpand.setImageResource(android.R.drawable.arrow_down_float);
+            } else {
+                layoutCcBcc.setVisibility(View.VISIBLE);
+                btnExpand.setImageResource(android.R.drawable.arrow_up_float);
+            }
+            isCcBccVisible = !isCcBccVisible;
         });
 
         // Preserve data across configuration changes

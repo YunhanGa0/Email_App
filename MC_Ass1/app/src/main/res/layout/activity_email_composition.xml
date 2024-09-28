@@ -12,26 +12,47 @@
         android:layout_height="wrap_content"
         android:hint="From" />
 
-    <!-- To -->
-    <EditText
-        android:id="@+id/et_to"
+    <!-- To with expand button -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="To" />
+        android:orientation="horizontal">
 
-    <!-- CC -->
-    <EditText
-        android:id="@+id/et_cc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="CC" />
+        <EditText
+            android:id="@+id/et_to"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="To" />
 
-    <!-- BCC -->
-    <EditText
-        android:id="@+id/et_bcc"
+        <ImageButton
+            android:id="@+id/btn_expand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/arrow_down_float"
+            android:contentDescription="展开CC和BCC" />
+    </LinearLayout>
+
+    <!-- CC and BCC (initially gone) -->
+    <LinearLayout
+        android:id="@+id/layout_cc_bcc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="BCC" />
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/et_cc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="CC" />
+
+        <EditText
+            android:id="@+id/et_bcc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="BCC" />
+    </LinearLayout>
 
     <!-- Subject -->
     <EditText

@@ -36,26 +36,27 @@ public class MainActivity extends AppCompatActivity {
 
         // Generate fake email data
         emailList = new ArrayList<>();
-        emailList.add(new Email(R.drawable.img_1, "Alice", "Meeting tomorrow?", "09:30 AM"));
         emailList.add(new Email(R.drawable.img_1, "Bob", "Project Update", "Yesterday"));
+        emailList.add(new Email(R.drawable.img_1, "Paul", "Budget Analysis for Q3", "4 days ago"));
+        emailList.add(new Email(R.drawable.img_1, "Quincy", "New Policy Updates", "Last month"));
+        emailList.add(new Email(R.drawable.img_1, "Frank", "Quarterly Report - Please Review", "10:15 AM"));
+        emailList.add(new Email(R.drawable.img_1, "Alice", "Meeting tomorrow?", "09:30 AM"));
+        emailList.add(new Email(R.drawable.img_1, "Henry", "Important: Server Downtime Notice", "3 days ago"));
+        emailList.add(new Email(R.drawable.img_1, "Tina", "Reminder: Subscription Renewal", "Last Thursday"));
+        emailList.add(new Email(R.drawable.img_1, "Karen", "New Marketing Strategy Proposal", "09:00 AM"));
+        emailList.add(new Email(R.drawable.img_1, "Liam", "Follow-up: Client Meeting", "Monday"));
+        emailList.add(new Email(R.drawable.img_1, "Rachel", "Happy Birthday!", "Today"));
+        emailList.add(new Email(R.drawable.img_1, "Steve", "Meeting Agenda for Tomorrow", "Friday"));
         emailList.add(new Email(R.drawable.img_1, "Carol", "Invoice attached", "2 days ago"));
         emailList.add(new Email(R.drawable.img_1, "David", "Trip plans", "Last week"));
         emailList.add(new Email(R.drawable.img_1, "Eva", "Job offer", "Last month"));
-        emailList.add(new Email(R.drawable.img_1, "Frank", "Quarterly Report - Please Review", "10:15 AM"));
-        emailList.add(new Email(R.drawable.img_1, "Grace", "Lunch Plans for Tomorrow?", "Yesterday"));
-        emailList.add(new Email(R.drawable.img_1, "Henry", "Important: Server Downtime Notice", "3 days ago"));
+        emailList.add(new Email(R.drawable.img_1, "Mia", "Conference Call Recap", "Saturday"));
         emailList.add(new Email(R.drawable.img_1, "Ivy", "Invitation to Webinar", "Last week"));
         emailList.add(new Email(R.drawable.img_1, "Jack", "Vacation Request Approval", "Last month"));
-        emailList.add(new Email(R.drawable.img_1, "Karen", "New Marketing Strategy Proposal", "09:00 AM"));
-        emailList.add(new Email(R.drawable.img_1, "Liam", "Follow-up: Client Meeting", "Monday"));
-        emailList.add(new Email(R.drawable.img_1, "Mia", "Conference Call Recap", "Saturday"));
         emailList.add(new Email(R.drawable.img_1, "Noah", "Updated Design Mockups", "2 weeks ago"));
+        emailList.add(new Email(R.drawable.img_1, "Grace", "Lunch Plans for Tomorrow?", "Yesterday"));
         emailList.add(new Email(R.drawable.img_1, "Olivia", "Your Order has Shipped", "Yesterday"));
-        emailList.add(new Email(R.drawable.img_1, "Paul", "Budget Analysis for Q3", "4 days ago"));
-        emailList.add(new Email(R.drawable.img_1, "Quincy", "New Policy Updates", "Last month"));
-        emailList.add(new Email(R.drawable.img_1, "Rachel", "Happy Birthday!", "Today"));
-        emailList.add(new Email(R.drawable.img_1, "Steve", "Meeting Agenda for Tomorrow", "Friday"));
-        emailList.add(new Email(R.drawable.img_1, "Tina", "Reminder: Subscription Renewal", "Last Thursday"));
+
 
 
         // Set the adapter
