@@ -2,19 +2,31 @@ package com.example.mc_ass1;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.SharedPreferences;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private EmailAdapter emailAdapter;
     private List<Email> emailList;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +55,49 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
+
+        // 初始化 DrawerLayout
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+
+        // 设置用户邮箱
+        View headerView = navigationView.getHeaderView(0);
+        TextView textViewUserEmail = headerView.findViewById(R.id.textViewUserEmail);
+        textViewUserEmail.setText(userEmail);
+
+        // 打印日志，检查邮箱是否被正确设置
+        Log.d("MainActivity", "Setting user email: " + userEmail);
+
+        // 设置菜单按钮
+        ImageButton btnMenu = findViewById(R.id.btnMenu);
+        btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+
+        // 设置导航抽屉项目点击监听器
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_settings) {
+                Toast.makeText(this, "设置", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_sent) {
+                Toast.makeText(this, "已发送", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_starred) {
+                Toast.makeText(this, "星标邮件", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_trash) {
+                Toast.makeText(this, "垃圾箱", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.nav_logout) {
+                // 退出登录
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.remove("user_email");
+                editor.apply();
+
+                // 跳转到登录页面
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            }
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });
 
         // 设置搜索栏
         searchViewEmails = findViewById(R.id.searchViewEmails);
@@ -98,6 +155,15 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
 

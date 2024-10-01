@@ -37,6 +37,18 @@ public class EmailCompositionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_composition);
 
+        // ... 其他初始化代码 ...
+
+        // 检查是否有传入的邮件数据
+        Intent intent = getIntent();
+        if (intent.hasExtra("from")) {
+            etFrom.setText(intent.getStringExtra("from"));
+            etTo.setText(intent.getStringExtra("to"));
+            etCc.setText(intent.getStringExtra("cc"));
+            etSubject.setText(intent.getStringExtra("subject"));
+            etBody.setText(intent.getStringExtra("body"));
+        }
+
         initializeViews();
         autoFillFromField();
         setButtonListeners();

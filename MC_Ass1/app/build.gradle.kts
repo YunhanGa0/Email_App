@@ -42,4 +42,10 @@ dependencies {
     
     // 添加 Material Design 依赖
     implementation("com.google.android.material:material:1.5.0")
+
+    implementation("com.sun.mail:android-mail:1.6.2")
+    implementation("com.sun.mail:android-activation:1.6.2")
+    implementation("androidx.drawerlayout:drawerlayout:1.1.1")
+    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("androidx.core:core-ktx:1.7.0")
 }

@@ -19,11 +19,11 @@
                 android:id="@+id/btn_edit"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/edit"
-                android:scaleType="fitCenter"
+                android:layout_alignParentStart="true"
                 android:background="@android:color/transparent"
                 android:contentDescription="Edit Email"
-                android:layout_alignParentStart="true" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/edit" />
 
             <ImageButton
                 android:id="@+id/btn_send"

@@ -3,6 +3,7 @@ package com.example.mc_ass1;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -44,6 +45,10 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("user_email", email);
         editor.apply();
 
+        // 打印日志，确认邮箱被保存
+        Log.d("LoginActivity", "Saved user email: " + email);
+
+        // 跳转到 MainActivity
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();

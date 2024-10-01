@@ -1,9 +1,12 @@
 package com.example.mc_ass1;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -11,6 +14,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class EmailReadingActivity extends AppCompatActivity {
 
@@ -114,7 +127,6 @@ public class EmailReadingActivity extends AppCompatActivity {
     }
 
     private void editEmail() {
-        // 返回到 EmailCompositionActivity 进行编辑
         Intent intent = new Intent(EmailReadingActivity.this, EmailCompositionActivity.class);
         intent.putExtra("from", textViewFrom.getText().toString().replace("From: ", ""));
         intent.putExtra("to", textViewTo.getText().toString().replace("To: ", ""));
@@ -126,7 +138,52 @@ public class EmailReadingActivity extends AppCompatActivity {
     }
 
     private void sendEmail() {
-        // 原有的发送邮件代码
+        String from = textViewFrom.getText().toString().replace("From: ", "");
+        String to = textViewTo.getText().toString().replace("To: ", "");
+        String cc = textViewCc.getText().toString().replace("CC: ", "");
+        String subject = textViewSubject.getText().toString().replace("Subject: ", "");
+        String body = textViewBody.getText().toString().replace("Body: ", "");
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // 只使用能够发送邮件的应用
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{to}); // 收件人
+        intent.putExtra(Intent.EXTRA_CC, new String[]{cc}); // 抄送
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject); // 主题
+        intent.putExtra(Intent.EXTRA_TEXT, body); // 正文
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(Intent.createChooser(intent, "选择邮件客户端:"));
+        } else {
+            Toast.makeText(this, "没有安装邮件客户端。", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("from", textViewFrom.getText().toString());
+        outState.putString("to", textViewTo.getText().toString());
+        outState.putString("cc", textViewCc.getText().toString());
+        outState.putString("subject", textViewSubject.getText().toString());
+        outState.putString("body", textViewBody.getText().toString());
+        outState.putString("attachmentName", tvAttachmentName.getText().toString());
+        outState.putString("imageName", tvImageName.getText().toString());
+        outState.putString("scheduleTime", tvScheduleTime.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            textViewFrom.setText(savedInstanceState.getString("from"));
+            textViewTo.setText(savedInstanceState.getString("to"));
+            textViewCc.setText(savedInstanceState.getString("cc"));
+            textViewSubject.setText(savedInstanceState.getString("subject"));
+            textViewBody.setText(savedInstanceState.getString("body"));
+            tvAttachmentName.setText(savedInstanceState.getString("attachmentName"));
+            tvImageName.setText(savedInstanceState.getString("imageName"));
+            tvScheduleTime.setText(savedInstanceState.getString("scheduleTime"));
+        }
     }
 }
 
