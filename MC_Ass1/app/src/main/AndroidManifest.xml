@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.mc_ass1"
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
@@ -13,6 +14,14 @@
         android:theme="@style/Theme.MC_Ass1"
         tools:targetApi="31">
 
+
+        <activity android:name=".LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

@@ -2,75 +2,131 @@ package com.example.mc_ass1;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class EmailReadingActivity extends AppCompatActivity {
 
     private TextView textViewFrom, textViewTo, textViewCc, textViewSubject, textViewBody;
+    private ImageButton btnEdit, btnSend;
+    private LinearLayout layoutAttachment, layoutImage, layoutSchedule;
+    private TextView tvAttachmentName, tvImageName, tvScheduleTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_reading);
 
+        // 初始化视图
+        initViews();
+
+        // 获取 intent 数据
+        Intent intent = getIntent();
+        setEmailContent(intent);
+
+        // 设置附加内容预览
+        setAttachmentPreview(intent);
+        setImagePreview(intent);
+        setSchedulePreview(intent);
+
+        // 设置按钮点击监听器
+        setButtonListeners();
+    }
+
+    private void initViews() {
         textViewFrom = findViewById(R.id.tv_from);
         textViewTo = findViewById(R.id.tv_to);
         textViewCc = findViewById(R.id.tv_cc);
         textViewSubject = findViewById(R.id.tv_subject);
         textViewBody = findViewById(R.id.tv_body);
 
-        // Get intent data
-        Intent intent = getIntent();
+        btnEdit = findViewById(R.id.btn_edit);
+        btnSend = findViewById(R.id.btn_send);
+
+        layoutAttachment = findViewById(R.id.layout_attachment);
+        layoutImage = findViewById(R.id.layout_image);
+        layoutSchedule = findViewById(R.id.layout_schedule);
+
+        tvAttachmentName = findViewById(R.id.tv_attachment_name);
+        tvImageName = findViewById(R.id.tv_image_name);
+        tvScheduleTime = findViewById(R.id.tv_schedule_time);
+    }
+
+    private void setEmailContent(Intent intent) {
         textViewFrom.setText("From: " + intent.getStringExtra("from"));
         textViewTo.setText("To: " + intent.getStringExtra("to"));
         textViewCc.setText("CC: " + intent.getStringExtra("cc"));
         textViewSubject.setText("Subject: " + intent.getStringExtra("subject"));
         textViewBody.setText("Body: " + intent.getStringExtra("body"));
+    }
 
-        Button buttonEdit = findViewById(R.id.btn_edit);
-        Button buttonSend = findViewById(R.id.btn_send);
+    private void setAttachmentPreview(Intent intent) {
+        String attachmentName = intent.getStringExtra("attachment_name");
+        if (attachmentName != null && !attachmentName.isEmpty()) {
+            tvAttachmentName.setText(attachmentName);
+            layoutAttachment.setVisibility(View.VISIBLE);
+        } else {
+            layoutAttachment.setVisibility(View.GONE);
+        }
+    }
 
-        // Edit Button Click Listener
-        buttonEdit.setOnClickListener(new View.OnClickListener() {
+    private void setImagePreview(Intent intent) {
+        String imageName = intent.getStringExtra("image_name");
+        if (imageName != null && !imageName.isEmpty()) {
+            tvImageName.setText(imageName);
+            layoutImage.setVisibility(View.VISIBLE);
+        } else {
+            layoutImage.setVisibility(View.GONE);
+        }
+    }
+
+    private void setSchedulePreview(Intent intent) {
+        String scheduleTime = intent.getStringExtra("schedule_time");
+        if (scheduleTime != null && !scheduleTime.isEmpty()) {
+            tvScheduleTime.setText(scheduleTime);
+            layoutSchedule.setVisibility(View.VISIBLE);
+        } else {
+            layoutSchedule.setVisibility(View.GONE);
+        }
+    }
+
+    private void setButtonListeners() {
+        btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent editIntent = new Intent(EmailReadingActivity.this, EmailCompositionActivity.class);
-                // Pass the data back to the composition activity
-                editIntent.putExtra("from", intent.getStringExtra("from"));
-                editIntent.putExtra("to", intent.getStringExtra("to"));
-                editIntent.putExtra("cc", intent.getStringExtra("cc"));
-                editIntent.putExtra("subject", intent.getStringExtra("subject"));
-                editIntent.putExtra("body", intent.getStringExtra("body"));
-                startActivity(editIntent);
+                editEmail();
             }
         });
 
-        // Send Button Click Listener (You can implement actual email sending logic here)
-        buttonSend.setOnClickListener(new View.OnClickListener() {
+        btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Here, implement the actual email sending logic.
-                // This could be using an email sending API or intent.
-                // For now, we'll just simulate the action with a Toast.
-
-                // Example of sending email via an intent
-                Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                emailIntent.setType("message/rfc822");
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{intent.getStringExtra("to")});
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, intent.getStringExtra("subject"));
-                emailIntent.putExtra(Intent.EXTRA_TEXT, intent.getStringExtra("body"));
-
-                try {
-                    startActivity(Intent.createChooser(emailIntent, "Send email..."));
-                } catch (android.content.ActivityNotFoundException ex) {
-                    // Handle no email client case
-                }
+                sendEmail();
             }
         });
+    }
+
+    private void editEmail() {
+        // 返回到 EmailCompositionActivity 进行编辑
+        Intent intent = new Intent(EmailReadingActivity.this, EmailCompositionActivity.class);
+        intent.putExtra("from", textViewFrom.getText().toString().replace("From: ", ""));
+        intent.putExtra("to", textViewTo.getText().toString().replace("To: ", ""));
+        intent.putExtra("cc", textViewCc.getText().toString().replace("CC: ", ""));
+        intent.putExtra("subject", textViewSubject.getText().toString().replace("Subject: ", ""));
+        intent.putExtra("body", textViewBody.getText().toString().replace("Body: ", ""));
+        startActivity(intent);
+        finish(); // 结束当前的 EmailReadingActivity
+    }
+
+    private void sendEmail() {
+        // 原有的发送邮件代码
     }
 }
 

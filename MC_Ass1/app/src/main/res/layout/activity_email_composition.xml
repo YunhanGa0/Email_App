@@ -1,123 +1,156 @@
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <!-- From -->
-    <EditText
-        android:id="@+id/et_from"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="From" />
-
-    <!-- To with expand button -->
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/et_to"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="To" />
-
-        <ImageButton
-            android:id="@+id/btn_expand"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/arrow_down_float"
-            android:contentDescription="展开CC和BCC" />
-    </LinearLayout>
-
-    <!-- CC and BCC (initially gone) -->
-    <LinearLayout
-        android:id="@+id/layout_cc_bcc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:padding="16dp">
 
+        <!-- From -->
         <EditText
-            android:id="@+id/et_cc"
+            android:id="@+id/et_from"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="CC" />
+            android:hint="From" />
 
-        <EditText
-            android:id="@+id/et_bcc"
+        <!-- To with expand button -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="BCC" />
-    </LinearLayout>
+            android:orientation="horizontal">
 
-    <!-- Subject -->
-    <EditText
-        android:id="@+id/et_subject"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Subject" />
+            <EditText
+                android:id="@+id/et_to"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="To" />
 
-    <!-- Email Body -->
-    <EditText
-        android:id="@+id/et_body"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email Body"
-        android:gravity="top"
-        android:minHeight="150dp"
-        android:inputType="textMultiLine"
-        android:scrollbars="vertical" />
+            <ImageButton
+                android:id="@+id/btn_expand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="展开CC和BCC"
+                android:src="@android:drawable/arrow_down_float" />
+        </LinearLayout>
 
-    <!-- Buttons: Clear, Preview -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <!-- CC and BCC (initially gone) -->
+        <LinearLayout
+            android:id="@+id/layout_cc_bcc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <Button
+            <EditText
+                android:id="@+id/et_cc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="CC" />
+
+            <EditText
+                android:id="@+id/et_bcc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="BCC" />
+        </LinearLayout>
+
+        <!-- Subject -->
+        <EditText
+            android:id="@+id/et_subject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Subject" />
+
+        <!-- Email Body -->
+        <EditText
+            android:id="@+id/et_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email body"
+            android:inputType="textMultiLine"
+            android:minLines="5"
+            android:gravity="top|start" />
+
+        <!-- Buttons: Clear, Preview -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <ImageButton
+                android:id="@+id/btn_insert_image"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/photo"
+                android:background="@android:color/transparent"
+                android:contentDescription="Insert Image" />
+
+            <ImageButton
+                android:id="@+id/btn_attach_file"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/paper_clip"
+                android:background="@android:color/transparent"
+                android:contentDescription="Attach File" />
+
+            <ImageButton
+                android:id="@+id/btn_schedule"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/clock"
+                android:background="@android:color/transparent"
+                android:contentDescription="Schedule Send" />
+            
+            <Button
             android:id="@+id/btn_clear"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Clear" />
 
-        <Button
-            android:id="@+id/btn_preview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Preview" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_preview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Preview" />
+        </LinearLayout>
+        
 
-    <!-- Developer Info -->
-    <TextView
-        android:id="@+id/tv_developer_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Developed by Yunhan Gao            ↓This is me"
-        android:gravity="center"
-        android:layout_marginTop="16dp"
-        android:textStyle="italic"/>
-
-    <!-- 新增的图片和文字 -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="8dp">
-
-        <ImageView
-            android:id="@+id/iv_developer_photo"
+        <!-- Developer Info -->
+        <TextView
+            android:id="@+id/tv_developer_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/your_logo_image"
-            android:contentDescription="Developer Photo"/>
+            android:text="Developed by Yunhan Gao            ↓This is me"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:textStyle="italic"/>
+
+        <!-- 修改后的图片布局 -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <ImageView
+                android:id="@+id/iv_developer_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/your_logo_image"
+                android:adjustViewBounds="true"
+                android:maxWidth="300dp"
+                android:maxHeight="300dp"
+                android:layout_gravity="center"
+                android:contentDescription="Developer Photo"/>
+
+        </FrameLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

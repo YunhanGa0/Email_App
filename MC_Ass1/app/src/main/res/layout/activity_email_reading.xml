@@ -9,33 +9,63 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Buttons: Edit, Send -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <ImageButton
+                android:id="@+id/btn_edit"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/edit"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:contentDescription="Edit Email"
+                android:layout_alignParentStart="true" />
+
+            <ImageButton
+                android:id="@+id/btn_send"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/plane"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:contentDescription="Send Email"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
         <!-- From -->
         <TextView
             android:id="@+id/tv_from"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="From: " />
+            android:text="From: "
+            android:layout_marginBottom="8dp" />
 
-        <!-- To -->
         <TextView
             android:id="@+id/tv_to"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="To: " />
+            android:text="To: "
+            android:layout_marginBottom="8dp" />
 
         <!-- CC -->
         <TextView
             android:id="@+id/tv_cc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CC: " />
+            android:text="CC: "
+            android:layout_marginBottom="8dp" />
 
         <!-- Subject -->
         <TextView
             android:id="@+id/tv_subject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Subject: " />
+            android:text="Subject: "
+            android:layout_marginBottom="8dp" />
 
         <!-- Email Body -->
         <TextView
@@ -43,27 +73,76 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Body: "
-            android:minHeight="150dp" />
+            android:minHeight="150dp"
+            android:layout_marginBottom="16dp" />
 
-        <!-- Buttons: Edit, Send -->
+        <!-- 附加内容预览 -->
         <LinearLayout
+            android:id="@+id/layout_attachment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:id="@+id/iv_attachment_preview"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/paper_clip"
+                android:contentDescription="Attachment Preview" />
+
+            <TextView
+                android:id="@+id/tv_attachment_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:text="Attachment name" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:id="@+id/iv_image_preview"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/photo"
+                android:contentDescription="Image Preview" />
+
+            <TextView
+                android:id="@+id/tv_image_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:text="Image name" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_schedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_edit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Edit Email" />
+            <ImageView
+                android:id="@+id/iv_schedule_preview"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/clock"
+                android:contentDescription="Schedule Preview" />
 
-            <Button
-                android:id="@+id/btn_send"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/tv_schedule_time"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Send Email" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:text="Scheduled send time" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

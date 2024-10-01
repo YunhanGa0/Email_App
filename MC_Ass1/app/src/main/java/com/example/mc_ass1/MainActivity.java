@@ -14,6 +14,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.SharedPreferences;
+
 public class MainActivity extends AppCompatActivity {
 
     private SearchView searchViewEmails;
@@ -25,6 +27,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 检查用户是否已登录
+        SharedPreferences prefs = getSharedPreferences("EmailPrefs", MODE_PRIVATE);
+        String userEmail = prefs.getString("user_email", null);
+
+        if (userEmail == null) {
+            // 用户未登录，跳转到登录页面
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_main);
 
         // 设置搜索栏
@@ -56,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
         emailList.add(new Email(R.drawable.img_1, "Noah", "Updated Design Mockups", "2 weeks ago"));
         emailList.add(new Email(R.drawable.img_1, "Grace", "Lunch Plans for Tomorrow?", "Yesterday"));
         emailList.add(new Email(R.drawable.img_1, "Olivia", "Your Order has Shipped", "Yesterday"));
-
-
 
         // Set the adapter
         emailAdapter = new EmailAdapter(emailList);
