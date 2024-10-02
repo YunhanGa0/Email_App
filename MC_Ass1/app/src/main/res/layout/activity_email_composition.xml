@@ -133,7 +133,7 @@
             android:layout_marginTop="16dp"
             android:textStyle="italic"/>
 
-        <!-- 修改后的图片布局 -->
+        <!-- My pic -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

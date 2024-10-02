@@ -37,11 +37,19 @@ public class EmailCompositionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_composition);
 
-        // ... 其他初始化代码 ...
-
-        // 检查是否有传入的邮件数据
+        // Check if have passed email data
         Intent intent = getIntent();
         if (intent.hasExtra("from")) {
+            etFrom.setText(intent.getStringExtra("from"));
+            etTo.setText(intent.getStringExtra("to"));
+            etCc.setText(intent.getStringExtra("cc"));
+            etSubject.setText(intent.getStringExtra("subject"));
+            etBody.setText(intent.getStringExtra("body"));
+        }
+
+        // Check if it's an editing mode
+        if (intent.getBooleanExtra("isEditing", false)) {
+            // If it's an editing mode, fill existing data
             etFrom.setText(intent.getStringExtra("from"));
             etTo.setText(intent.getStringExtra("to"));
             etCc.setText(intent.getStringExtra("cc"));
@@ -219,5 +227,21 @@ public class EmailCompositionActivity extends AppCompatActivity {
             }
             scheduledTime = savedInstanceState.getLong("scheduledTime");
         }
+    }
+
+    private void sendEmail() {
+        // ... 发送邮件的代码 ...
+
+        // 发送成功后，如果是编辑模式，返回结果给 EmailReadingActivity
+        if (getIntent().getBooleanExtra("isEditing", false)) {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("from", etFrom.getText().toString());
+            resultIntent.putExtra("to", etTo.getText().toString());
+            resultIntent.putExtra("cc", etCc.getText().toString());
+            resultIntent.putExtra("subject", etSubject.getText().toString());
+            resultIntent.putExtra("body", etBody.getText().toString());
+            setResult(RESULT_OK, resultIntent);
+        }
+        finish();
     }
 }

@@ -2,23 +2,17 @@ package com.example.mc_ass1;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +21,25 @@ import android.content.SharedPreferences;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
+
+/**
+ * MainActivity.java
+ *
+ * This is the main activity class for the email application. It is responsible for
+ * displaying the email list, handling user login status, implementing search
+ * functionality, and managing the navigation drawer.
+ *
+ * Features:
+ * - Display email list
+ * - User login status check
+ * - Email search functionality
+ * - Navigation drawer (includes settings, sent items, starred emails, trash, and logout options)
+ * - Compose new email
+ *
+ * @author Yunhan Gao
+ * @version 1.0
+ * @since 2024-10-02
+ */
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // 检查用户是否已登录
+        // Check if user is login
         SharedPreferences prefs = getSharedPreferences("EmailPrefs", MODE_PRIVATE);
         String userEmail = prefs.getString("user_email", null);
 
         if (userEmail == null) {
-            // 用户未登录，跳转到登录页面
+            // If user is not login, go to login page
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
@@ -56,23 +69,23 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        // 初始化 DrawerLayout
+        // Initialize DrawerLayout
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
 
-        // 设置用户邮箱
+        // Set user email
         View headerView = navigationView.getHeaderView(0);
         TextView textViewUserEmail = headerView.findViewById(R.id.textViewUserEmail);
         textViewUserEmail.setText(userEmail);
 
-        // 打印日志，检查邮箱是否被正确设置
+        // Check if correct
         Log.d("MainActivity", "Setting user email: " + userEmail);
 
-        // 设置菜单按钮
+        // Set menu button
         ImageButton btnMenu = findViewById(R.id.btnMenu);
         btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
-        // 设置导航抽屉项目点击监听器
+        // set menu listener
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_settings) {
@@ -84,12 +97,12 @@ public class MainActivity extends AppCompatActivity {
             } else if (id == R.id.nav_trash) {
                 Toast.makeText(this, "垃圾箱", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.nav_logout) {
-                // 退出登录
+                // logout
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.remove("user_email");
                 editor.apply();
 
-                // 跳转到登录页面
+                // Go to email page
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
@@ -99,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        // 设置搜索栏
+        // Set search window
         searchViewEmails = findViewById(R.id.searchViewEmails);
 
         // Initialize RecyclerView
@@ -108,37 +121,41 @@ public class MainActivity extends AppCompatActivity {
 
         // Generate fake email data
         emailList = new ArrayList<>();
-        emailList.add(new Email(R.drawable.img_1, "Bob", "Project Update", "Yesterday"));
-        emailList.add(new Email(R.drawable.img_1, "Paul", "Budget Analysis for Q3", "4 days ago"));
-        emailList.add(new Email(R.drawable.img_1, "Quincy", "New Policy Updates", "Last month"));
-        emailList.add(new Email(R.drawable.img_1, "Frank", "Quarterly Report - Please Review", "10:15 AM"));
-        emailList.add(new Email(R.drawable.img_1, "Alice", "Meeting tomorrow?", "09:30 AM"));
-        emailList.add(new Email(R.drawable.img_1, "Henry", "Important: Server Downtime Notice", "3 days ago"));
-        emailList.add(new Email(R.drawable.img_1, "Tina", "Reminder: Subscription Renewal", "Last Thursday"));
-        emailList.add(new Email(R.drawable.img_1, "Karen", "New Marketing Strategy Proposal", "09:00 AM"));
-        emailList.add(new Email(R.drawable.img_1, "Liam", "Follow-up: Client Meeting", "Monday"));
-        emailList.add(new Email(R.drawable.img_1, "Rachel", "Happy Birthday!", "Today"));
-        emailList.add(new Email(R.drawable.img_1, "Steve", "Meeting Agenda for Tomorrow", "Friday"));
-        emailList.add(new Email(R.drawable.img_1, "Carol", "Invoice attached", "2 days ago"));
-        emailList.add(new Email(R.drawable.img_1, "David", "Trip plans", "Last week"));
-        emailList.add(new Email(R.drawable.img_1, "Eva", "Job offer", "Last month"));
-        emailList.add(new Email(R.drawable.img_1, "Mia", "Conference Call Recap", "Saturday"));
-        emailList.add(new Email(R.drawable.img_1, "Ivy", "Invitation to Webinar", "Last week"));
-        emailList.add(new Email(R.drawable.img_1, "Jack", "Vacation Request Approval", "Last month"));
-        emailList.add(new Email(R.drawable.img_1, "Noah", "Updated Design Mockups", "2 weeks ago"));
-        emailList.add(new Email(R.drawable.img_1, "Grace", "Lunch Plans for Tomorrow?", "Yesterday"));
-        emailList.add(new Email(R.drawable.img_1, "Olivia", "Your Order has Shipped", "Yesterday"));
+        emailList.add(new Email(R.drawable.avatar, "Bob", "Project Update", "Yesterday"));
+        emailList.add(new Email(R.drawable.avatar, "Paul", "Budget Analysis for Q3", "4 days ago"));
+        emailList.add(new Email(R.drawable.avatar, "Quincy", "New Policy Updates", "Last month"));
+        emailList.add(new Email(R.drawable.avatar, "Frank", "Quarterly Report - Please Review", "10:15 AM"));
+        emailList.add(new Email(R.drawable.avatar, "Alice", "Meeting tomorrow?", "09:30 AM"));
+        emailList.add(new Email(R.drawable.avatar, "Henry", "Important: Server Downtime Notice", "3 days ago"));
+        emailList.add(new Email(R.drawable.avatar, "Tina", "Reminder: Subscription Renewal", "Last Thursday"));
+        emailList.add(new Email(R.drawable.avatar, "Karen", "New Marketing Strategy Proposal", "09:00 AM"));
+        emailList.add(new Email(R.drawable.avatar, "Liam", "Follow-up: Client Meeting", "Monday"));
+        emailList.add(new Email(R.drawable.avatar, "Rachel", "Happy Birthday!", "Today"));
+        emailList.add(new Email(R.drawable.avatar, "Steve", "Meeting Agenda for Tomorrow", "Friday"));
+        emailList.add(new Email(R.drawable.avatar, "Carol", "Invoice attached", "2 days ago"));
+        emailList.add(new Email(R.drawable.avatar, "David", "Trip plans", "Last week"));
+        emailList.add(new Email(R.drawable.avatar, "Eva", "Job offer", "Last month"));
+        emailList.add(new Email(R.drawable.avatar, "Mia", "Conference Call Recap", "Saturday"));
+        emailList.add(new Email(R.drawable.avatar, "Ivy", "Invitation to Webinar", "Last week"));
+        emailList.add(new Email(R.drawable.avatar, "Jack", "Vacation Request Approval", "Last month"));
+        emailList.add(new Email(R.drawable.avatar, "Noah", "Updated Design Mockups", "2 weeks ago"));
+        emailList.add(new Email(R.drawable.avatar, "Grace", "Lunch Plans for Tomorrow?", "Yesterday"));
+        emailList.add(new Email(R.drawable.avatar, "Olivia", "Your Order has Shipped", "Yesterday"));
 
         // Set the adapter
         emailAdapter = new EmailAdapter(emailList);
         recyclerView.setAdapter(emailAdapter);
 
-        // 设置写邮件按钮
+        // Write email button
         fabComposeEmail = findViewById(R.id.fabComposeEmail);
         fabComposeEmail.setOnClickListener(v -> {
-            // 跳转到写邮件界面
-            Intent intent = new Intent(MainActivity.this, EmailCompositionActivity.class);
-            startActivity(intent);
+            try {
+                Intent intent = new Intent(MainActivity.this, EmailCompositionActivity.class);
+                startActivity(intent);
+            } catch (Exception e) {
+                Log.e("MainActivity", "Error starting EmailCompositionActivity", e);
+                Toast.makeText(this, "Unable to compose email. Please try again.", Toast.LENGTH_LONG).show();
+            }
         });
 
         // Set up SearchView listener for filtering emails by sender

@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Properties;
@@ -24,6 +26,8 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import android.content.SharedPreferences;
 
 public class EmailReadingActivity extends AppCompatActivity {
 
@@ -133,29 +137,87 @@ public class EmailReadingActivity extends AppCompatActivity {
         intent.putExtra("cc", textViewCc.getText().toString().replace("CC: ", ""));
         intent.putExtra("subject", textViewSubject.getText().toString().replace("Subject: ", ""));
         intent.putExtra("body", textViewBody.getText().toString().replace("Body: ", ""));
-        startActivity(intent);
-        finish(); // 结束当前的 EmailReadingActivity
+        intent.putExtra("isEditing", true);  // 添加一个标志表示这是编辑模式
+        startActivityForResult(intent, REQUEST_CODE_EDIT_EMAIL);  // 使用 startActivityForResult
+    }
+
+    private static final int REQUEST_CODE_EDIT_EMAIL = 1001;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_EDIT_EMAIL && resultCode == RESULT_OK) {
+            // 更新邮件内容
+            if (data != null) {
+                textViewFrom.setText("From: " + data.getStringExtra("from"));
+                textViewTo.setText("To: " + data.getStringExtra("to"));
+                textViewCc.setText("CC: " + data.getStringExtra("cc"));
+                textViewSubject.setText("Subject: " + data.getStringExtra("subject"));
+                textViewBody.setText("Body: " + data.getStringExtra("body"));
+            }
+        }
     }
 
     private void sendEmail() {
-        String from = textViewFrom.getText().toString().replace("From: ", "");
-        String to = textViewTo.getText().toString().replace("To: ", "");
-        String cc = textViewCc.getText().toString().replace("CC: ", "");
-        String subject = textViewSubject.getText().toString().replace("Subject: ", "");
-        String body = textViewBody.getText().toString().replace("Body: ", "");
+        SharedPreferences prefs = getSharedPreferences("EmailPrefs", MODE_PRIVATE);
+        final String username = prefs.getString("user_email", ""); // get the email saved in login
+        final String password = "afig iyuj dfkx vwjd"; // google app password
 
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto:")); // 只使用能够发送邮件的应用
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{to}); // 收件人
-        intent.putExtra(Intent.EXTRA_CC, new String[]{cc}); // 抄送
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject); // 主题
-        intent.putExtra(Intent.EXTRA_TEXT, body); // 正文
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
 
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(Intent.createChooser(intent, "选择邮件客户端:"));
-        } else {
-            Toast.makeText(this, "没有安装邮件客户端。", Toast.LENGTH_SHORT).show();
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username)); // use login email as sender
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(textViewTo.getText().toString().replace("To: ", "")));
+            message.setSubject(textViewSubject.getText().toString().replace("Subject: ", ""));
+            message.setText(textViewBody.getText().toString().replace("Body: ", ""));
+
+            new AsyncTask<Void, Void, String>() {
+                @Override
+                protected String doInBackground(Void... params) {
+                    try {
+                        Transport.send(message);
+                        return "Success";
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                        return "Error: " + e.getMessage();
+                    }
+                }
+
+                @Override
+                protected void onPostExecute(String result) {
+                    if (result.equals("Success")) {
+                        Toast.makeText(EmailReadingActivity.this, "Email has send successfully", Toast.LENGTH_SHORT).show();
+                        // success alert
+                        showSuccessDialog();
+                    } else {
+                        Toast.makeText(EmailReadingActivity.this, result, Toast.LENGTH_LONG).show();
+                    }
+                }
+            }.execute();
+
+        } catch (MessagingException e) {
+            Toast.makeText(EmailReadingActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void showSuccessDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Success")
+                .setMessage("Your email has send successfully！")
+                .setPositiveButton("Check", null)
+                .show();
     }
 
     @Override

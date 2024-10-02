@@ -30,9 +30,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".EmailCompositionActivity"
-            android:exported="true"/>
-        <activity android:name=".SplashActivity"
-            android:exported="true"/>
+            android:exported="false"/>
         <activity android:name=".EmailReadingActivity"
             android:exported="true"/>
     </application>

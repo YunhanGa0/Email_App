@@ -76,7 +76,7 @@
             android:minHeight="150dp"
             android:layout_marginBottom="16dp" />
 
-        <!-- 附加内容预览 -->
+        <!-- attachment -->
         <LinearLayout
             android:id="@+id/layout_attachment"
             android:layout_width="match_parent"

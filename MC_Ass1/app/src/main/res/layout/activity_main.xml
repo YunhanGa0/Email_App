@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!-- 搜索栏和菜单按钮 -->
+            <!-- Search window and menu button -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,13 +51,13 @@
                 android:layout_marginTop="8dp"/>
         </LinearLayout>
 
-        <!-- 写邮件的按钮，右下角浮动 -->
+        <!-- Write email button -->
         <ImageButton
             android:id="@+id/fabComposeEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:src="@drawable/img"
+            android:src="@drawable/new_email"
             android:contentDescription="Write Email"
             android:clickable="true"
             android:enabled="true"
@@ -65,7 +65,7 @@
 
     </FrameLayout>
 
-    <!-- 导航抽屉 -->
+    <!-- Guide menu button -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
